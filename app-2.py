@@ -3,6 +3,7 @@ import tensorflow as tf
 import numpy as np
 import json
 import os
+import base64
 from PIL import Image
 
 st.set_page_config(
@@ -48,16 +49,21 @@ uploaded_file = st.file_uploader(
 
 
 if uploaded_file is not None:
-    # อ่าน Bytes เพื่อใช้แสดงรูป (แก้ปัญหาไอคอนเครื่องหมาย ?)
-    file_bytes = uploaded_file.getvalue()
-    
-    # อ่านภาพด้วย PIL เพื่อใช้ในการ resize และส่งให้ Model
+    # 1. อ่านไฟล์ภาพและนำไปประมวลผลสำหรับ Model
     image = Image.open(uploaded_file).convert("RGB")
-
-    # แสดงรูปภาพด้วย Raw Bytes
-    st.image(
-        file_bytes,
-        caption="ภาพใบพืชที่อัปโหลด"
+    
+    # 2. แปลงไฟล์เป็น Base64 เพื่อฝังรูปใน HTML โดยตรง (แก้ปัญหาการ Render รูปภาพบน Streamlit)
+    bytes_data = uploaded_file.getvalue()
+    base64_image = base64.b64encode(bytes_data).decode('utf-8')
+    mime_type = uploaded_file.type if uploaded_file.type else "image/jpeg"
+    
+    # แสดงรูปภาพด้วย HTML Data URI
+    st.markdown(
+        f'<div style="text-align: center;">'
+        f'<img src="data:{mime_type};base64,{base64_image}" style="max-width: 100%; height: auto; border-radius: 8px;">'
+        f'<p style="color: gray; font-size: 0.8em; margin-top: 5px;">ภาพใบพืชที่อัปโหลด</p>'
+        f'</div>',
+        unsafe_allow_html=True
     )
 
     if st.button("วิเคราะห์ภาพ"):
