@@ -46,15 +46,19 @@ uploaded_file = st.file_uploader(
     type=["jpg", "jpeg", "png"]
 )
 
+
 if uploaded_file is not None:
-    # อ่านไฟล์ภาพด้วย PIL
+    # อ่าน Bytes เพื่อใช้แสดงรูป (แก้ปัญหาไอคอนเครื่องหมาย ?)
+    file_bytes = uploaded_file.getvalue()
+    
+    # อ่านภาพด้วย PIL เพื่อใช้ในการ resize และส่งให้ Model
     image = Image.open(uploaded_file).convert("RGB")
-    
-    # แปลงเป็น NumPy Array ชัดเจนเพื่อป้องกัน Render Error ใน Streamlit
-    img_display = np.array(image)
-    
-    # แสดงรูปภาพ (ไม่ใส่ parameter กว้าง/ยาวที่เสี่ยงต่อการพ่นค่าบูลีน)
-    st.image(img_display, caption="ภาพใบพืชที่อัปโหลด")
+
+    # แสดงรูปภาพด้วย Raw Bytes
+    st.image(
+        file_bytes,
+        caption="ภาพใบพืชที่อัปโหลด"
+    )
 
     if st.button("วิเคราะห์ภาพ"):
         with st.spinner("กำลังประมวลผล..."):
