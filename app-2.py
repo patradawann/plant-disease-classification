@@ -96,5 +96,5 @@ if uploaded_file is not None:
         else:
             st.warning(f"ผลการจำแนก: {disease_name}")
 
-        st.write(f"ค่าความมั่นใจ (Confidence): {confidence:.2f}%")
+        st.write(f"ค่าความแม่นยำ (Confidence): {confidence:.2f}%")
         st.caption("ผลการทำนายเป็นการคัดกรองเบื้องต้น ไม่ใช่การวินิจฉัยโรคโดยผู้เชี่ยวชาญ")
