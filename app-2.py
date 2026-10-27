@@ -12,8 +12,6 @@ st.set_page_config(
 )
 
 st.title("🌱 ระบบตรวจวินิจฉัยและจำแนกโรคใบพืช")
-
-# รวม String ให้อยู่ในบรรทัดเดียวกัน ป้องกันปัญหา Streamlit แสดงค่า 0
 st.write("อัปโหลดภาพถ่ายใบพืชเพื่อจำแนกประเภทโรค")
 
 
@@ -48,17 +46,15 @@ uploaded_file = st.file_uploader(
     type=["jpg", "jpeg", "png"]
 )
 
-
 if uploaded_file is not None:
-    # อ่านรูปภาพและแปลงเป็น Image Object
+    # อ่านไฟล์ภาพด้วย PIL
     image = Image.open(uploaded_file).convert("RGB")
-
-    # แสดงรูปภาพอย่างปลอดภัย (ไม่ใช้ use_container_width เพื่อป้องกันปัญหาค้าง)
-    st.image(
-        image,
-        caption="ภาพใบพืชที่อัปโหลด",
-        use_column_width=True
-    )
+    
+    # แปลงเป็น NumPy Array ชัดเจนเพื่อป้องกัน Render Error ใน Streamlit
+    img_display = np.array(image)
+    
+    # แสดงรูปภาพ (ไม่ใส่ parameter กว้าง/ยาวที่เสี่ยงต่อการพ่นค่าบูลีน)
+    st.image(img_display, caption="ภาพใบพืชที่อัปโหลด")
 
     if st.button("วิเคราะห์ภาพ"):
         with st.spinner("กำลังประมวลผล..."):
@@ -96,5 +92,5 @@ if uploaded_file is not None:
         else:
             st.warning(f"ผลการจำแนก: {disease_name}")
 
-        st.write(f"ค่าความแม่นยำ (Confidence): {confidence:.2f}%")
+        st.write(f"ค่าความมั่นใจ (Confidence): {confidence:.2f}%")
         st.caption("ผลการทำนายเป็นการคัดกรองเบื้องต้น ไม่ใช่การวินิจฉัยโรคโดยผู้เชี่ยวชาญ")
