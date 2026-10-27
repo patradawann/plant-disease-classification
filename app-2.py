@@ -1,4 +1,3 @@
-
 import streamlit as st
 import tensorflow as tf
 import numpy as np
@@ -61,18 +60,13 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file is not None:
 
-    try:
-        image = Image.open(uploaded_file).convert("RGB")
+    image = Image.open(uploaded_file).convert("RGB")
 
-        st.image(
-            image,
-            caption="ภาพใบพืชที่อัปโหลด",
-            width=400
-        )
-
-    except Exception as e:
-        st.error(f"ไม่สามารถแสดงภาพได้: {e}")
-        st.stop()
+    st.image(
+        image,
+        caption="ภาพใบพืชที่อัปโหลด",
+        use_container_width=True
+    )
 
     if st.button("วิเคราะห์ภาพ"):
 
@@ -145,4 +139,3 @@ if uploaded_file is not None:
             "ผลการทำนายเป็นการคัดกรองเบื้องต้น "
             "ไม่ใช่การวินิจฉัยโรคโดยผู้เชี่ยวชาญ"
         )
-
