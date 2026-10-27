@@ -61,13 +61,18 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file is not None:
 
-    image = Image.open(uploaded_file).convert("RGB")
+    try:
+        image = Image.open(uploaded_file).convert("RGB")
 
-    st.image(
-        image,
-        caption="ภาพใบพืชที่อัปโหลด",
-        use_container_width=True
-    )
+        st.image(
+            image,
+            caption="ภาพใบพืชที่อัปโหลด",
+            width=400
+        )
+
+    except Exception as e:
+        st.error(f"ไม่สามารถแสดงภาพได้: {e}")
+        st.stop()
 
     if st.button("วิเคราะห์ภาพ"):
 
