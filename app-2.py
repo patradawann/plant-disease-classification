@@ -13,7 +13,8 @@ st.set_page_config(
 
 st.title("🌱 ระบบตรวจวินิจฉัยและจำแนกโรคใบพืช")
 
-st.write("อัปโหลดภาพถ่ายใบพืช เพื่อจำแนกประเภทโรค")
+# รวม String ให้อยู่ในบรรทัดเดียวกัน ป้องกันปัญหา Streamlit แสดงค่า 0
+st.write("อัปโหลดภาพถ่ายใบพืชเพื่อจำแนกประเภทโรค")
 
 
 @st.cache_resource
@@ -49,9 +50,10 @@ uploaded_file = st.file_uploader(
 
 
 if uploaded_file is not None:
+    # อ่านรูปภาพและแปลงเป็น Image Object
     image = Image.open(uploaded_file).convert("RGB")
 
-    # แสดงรูปภาพ (แก้ไขพารามิเตอร์ให้รองรับทุกเวอร์ชัน)
+    # แสดงรูปภาพอย่างปลอดภัย (ไม่ใช้ use_container_width เพื่อป้องกันปัญหาค้าง)
     st.image(
         image,
         caption="ภาพใบพืชที่อัปโหลด",
