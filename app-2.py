@@ -57,10 +57,11 @@ if uploaded_file is not None:
     base64_image = base64.b64encode(bytes_data).decode('utf-8')
     mime_type = uploaded_file.type if uploaded_file.type else "image/jpeg"
     
+    # แสดงรูปภาพด้วย HTML Data URI
     st.markdown(
         f'<div style="text-align: center;">'
-        f'<img src="data:{mime_type};base64,{base64_image}" style="width: 500px; max-width: 100%; height: auto; border-radius: 8px;">'
-        f'<p style="color: gray; font-size: 0.9em; margin-top: 8px;">ภาพใบพืชที่อัปโหลด</p>'
+        f'<img src="data:{mime_type};base64,{base64_image}" style="max-width: 100%; height: auto; border-radius: 8px;">'
+        f'<p style="color: gray; font-size: 0.8em; margin-top: 5px;">ภาพใบพืชที่อัปโหลด</p>'
         f'</div>',
         unsafe_allow_html=True
     )
