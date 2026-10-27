@@ -69,7 +69,7 @@ if uploaded_file is not None:
     if st.button("วิเคราะห์ภาพ"):
         with st.spinner("กำลังประมวลผล..."):
             # 1. ปรับขนาดภาพ
-            image_resized = image.resize((224, 224))
+            image_resized = image.resize((300, 300))
 
             # 2. แปลงภาพเป็น Array
             img_array = np.array(image_resized, dtype=np.float32)
