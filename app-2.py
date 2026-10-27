@@ -1,4 +1,4 @@
-
+```python
 import streamlit as st
 import tensorflow as tf
 import numpy as np
@@ -65,7 +65,7 @@ if uploaded_file is not None:
 
     st.image(
         image,
-        caption="ภาพที่อัปโหลด",
+        caption="ภาพใบพืชที่อัปโหลด",
         use_container_width=True
     )
 
@@ -140,3 +140,4 @@ if uploaded_file is not None:
             "ผลการทำนายเป็นการคัดกรองเบื้องต้น "
             "ไม่ใช่การวินิจฉัยโรคโดยผู้เชี่ยวชาญ"
         )
+```
