@@ -60,15 +60,13 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file is not None:
 
-uploaded_file.seek(0)
+    image = Image.open(uploaded_file).convert("RGB")
 
-image = Image.open(uploaded_file).convert("RGB")
-
-st.image(
-    np.array(image),
-    caption="ภาพใบพืชที่อัปโหลด",
-    width=400
-)
+    st.image(
+        image,
+        caption="ภาพใบพืชที่อัปโหลด",
+        use_container_width=True
+    )
 
     if st.button("วิเคราะห์ภาพ"):
 
